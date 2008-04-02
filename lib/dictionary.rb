@@ -12,4 +12,9 @@ class Dictionary
     raise 'Not found' if value.nil?
     return value
   end
+  
+  def store key, value
+    @cache.set key, value
+    @store.set key, value
+  end
 end
