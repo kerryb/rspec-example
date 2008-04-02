@@ -19,7 +19,7 @@ describe Dictionary, "looking up a value" do
     @dictionary.lookup @key
   end
   
-  describe "when the value is in the cache" do
+  describe "when the value IS in the cache" do
     before do
       @cache.stub!(:get).and_return @cached_value
     end
@@ -33,19 +33,24 @@ describe Dictionary, "looking up a value" do
     end
   end
   
-  describe "when the value is not in the cache" do
+  describe "when the value is NOT in the cache" do
     before do
       @cache.stub!(:get).and_return nil
     end
 
     it "should look in the store" do
       @cache.stub!(:get).and_return nil
-      @store.should_receive(:get).with @key
+      @store.should_receive(:get).with(@key).and_return @stored_value
       @dictionary.lookup @key
     end
     
     it "should return the value returned from the store" do
       @dictionary.lookup(@key).should == @stored_value
+    end
+    
+    it "should raise an error if the value is not in the store either" do
+      @store.stub!(:get).and_return nil
+      lambda{@dictionary.lookup@key}.should raise_error
     end
   end
 end
