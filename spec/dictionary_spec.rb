@@ -7,9 +7,10 @@ describe Dictionary, "looking up a value" do
     @store = mock 'store'
     @cache = mock 'cache'
     @key='foo'
-    @value = 'bar'
-    @cache.stub!(:get).and_return @value
-    @store.stub!(:get).and_return @value
+    @cached_value = 'cached foo'
+    @stored_value = 'stored foo'
+    @cache.stub!(:get).and_return @cached_value
+    @store.stub!(:get).and_return @stored_value
     @dictionary = Dictionary.new(@store, @cache)
   end
   
@@ -18,13 +19,29 @@ describe Dictionary, "looking up a value" do
     @dictionary.lookup @key
   end
   
-  it "should return the value returned from the cache" do
-    @dictionary.lookup(@key).should == @value
+  describe "when the value is in the cache" do
+    before do
+      @cache.stub!(:get).and_return @cached_value
+    end
+    
+    it "should return the value returned from the cache" do
+      @dictionary.lookup(@key).should == @cached_value
+    end
+  
+    it "should not look in the store" do
+      @store.should_not_receive(:get)
+    end
   end
   
-  it "should look in the store if the value is not in the cache" do
-    @cache.stub!(:get).and_return nil
-    @store.should_receive(:get).with @key
-    @dictionary.lookup @key
+  describe "when the value is not in the cache" do
+    before do
+      @cache.stub!(:get).and_return nil
+    end
+
+    it "should look in the store" do
+      @cache.stub!(:get).and_return nil
+      @store.should_receive(:get).with @key
+      @dictionary.lookup @key
+    end
   end
 end

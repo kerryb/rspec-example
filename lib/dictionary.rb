@@ -5,7 +5,8 @@ class Dictionary
   end
   
   def lookup key
-    @cache.get key
+    value = @cache.get key
+    return value unless value.nil?
     @store.get key
   end
 end
