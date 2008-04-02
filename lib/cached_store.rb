@@ -14,4 +14,8 @@ class CachedStore
   def empty?
     @values.empty?
   end
+
+  def size
+    @values.size
+  end
 end

@@ -13,6 +13,12 @@ describe CachedStore do
   it 'should be initially empty' do
     @store.should be_empty
   end
+
+  describe "adding a new item" do
+    it "should increase the number of items" do
+      lambda{@store.set 'foo', 'bar'}.should change(@store, :size).by 1
+    end
+  end
   
   describe 'after adding an item' do
     before do
