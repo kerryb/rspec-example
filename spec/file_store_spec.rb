@@ -1,12 +1,12 @@
 require 'spec'
-$: << File.dirname(__FILE__) + '/../lib'
+$: << File.dirname(__FILE__) << File.dirname(__FILE__) + '/../lib'
 require 'file_store'
+require 'store_spec'
 
 describe FileStore do
-  it do
-    FileStore.new.should respond_to(:get)
+  before do
+    @store = FileStore.new
   end
-  it do
-    FileStore.new.should respond_to(:set)
-  end
+  
+  it_should_behave_like 'a store'
 end

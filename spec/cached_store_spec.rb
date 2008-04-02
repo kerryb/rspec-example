@@ -1,12 +1,12 @@
 require 'spec'
-$: << File.dirname(__FILE__) + '/../lib'
+$: << File.dirname(__FILE__) << File.dirname(__FILE__) + '/../lib'
 require 'cached_store'
+require 'store_spec'
 
 describe CachedStore do
-  it do
-    CachedStore.new.should respond_to(:get)
+  before do
+    @store = CachedStore.new
   end
-  it do
-    CachedStore.new.should respond_to(:set)
-  end
+  
+  it_should_behave_like 'a store'
 end
