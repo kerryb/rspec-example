@@ -6,6 +6,8 @@ describe Dictionary do
   before do
     @store = mock 'store'
     @cache = mock 'cache'
+    @cache.stub! :set
+    @store.stub! :set
     @key='foo'
     @dictionary = Dictionary.new(@store, @cache)
   end
@@ -48,7 +50,10 @@ describe Dictionary do
         @dictionary.lookup @key
       end
     
-      it "should store the value in the cache"
+      it "should store the value in the cache" do
+        @cache.should_receive(:set).with(@key, @stored_value)
+        @dictionary.lookup @key
+      end        
     
       it "should return the value returned from the store" do
         @dictionary.lookup(@key).should == @stored_value
@@ -61,12 +66,7 @@ describe Dictionary do
     end
   end
 
-  describe "Adding a value" do
-    before do
-      @cache.stub! :set
-      @store.stub! :set
-    end
-    
+  describe "Adding a value" do    
     it "should put it in the cache" do
       @cache.should_receive(:set).with(@key, @value)
       @dictionary.store @key, @value

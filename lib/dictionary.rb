@@ -8,8 +8,9 @@ class Dictionary
     value = @cache.get key
     if value.nil?
       value = @store.get key
+      raise 'Not found' if value.nil?
+      @cache.set key, value
     end
-    raise 'Not found' if value.nil?
     return value
   end
   
