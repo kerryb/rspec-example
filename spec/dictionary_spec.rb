@@ -43,5 +43,9 @@ describe Dictionary, "looking up a value" do
       @store.should_receive(:get).with @key
       @dictionary.lookup @key
     end
+    
+    it "should return the value returned from the store" do
+      @dictionary.lookup(@key).should == @stored_value
+    end
   end
 end
