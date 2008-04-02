@@ -9,4 +9,22 @@ describe CachedStore do
   end
   
   it_should_behave_like 'a store'
+  
+  it 'should be initially empty' do
+    @store.should be_empty
+  end
+  
+  describe 'after adding an item' do
+    before do
+      @store.set 'foo', 'bar'
+    end
+    
+    it 'should return the stored value when requested' do
+      @store.get('foo').should == 'bar'
+    end
+    
+    it 'should not be empty' do
+      @store.should_not be_empty
+    end
+  end
 end

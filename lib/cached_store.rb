@@ -1,8 +1,17 @@
 class CachedStore
-  def get
-    #TODO
+  def initialize
+    @values = {}
   end
-  def set
-    #TODO
+  
+  def get key
+    @values[key]
+  end
+  
+  def set key, value
+    @values[key] = value
+  end
+  
+  def empty?
+    @values.empty?
   end
 end
