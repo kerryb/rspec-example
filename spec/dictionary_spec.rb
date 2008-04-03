@@ -72,9 +72,15 @@ describe Dictionary do
       @dictionary.store @key, @value
     end
     
+<<<<<<< step11:spec/dictionary_spec.rb
     it "should put it in the store" do
       @store.should_receive(:set).with(@key, @value)
       @dictionary.store @key, @value
+=======
+    it "should raise an error if the value is not in the store either" do
+      @store.stub!(:get).and_return nil
+      lambda{@dictionary.lookup @key}.should raise_error
+>>>>>>> local:spec/dictionary_spec.rb
     end
   end
 end
