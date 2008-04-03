@@ -16,7 +16,7 @@ describe CachedStore do
 
   describe "adding a new item" do
     it "should increase the number of items" do
-      lambda{@store.set 'foo', 'bar'}.should change(@store, :size).by 1
+      lambda{@store.set 'foo', 'bar'}.should change(@store, :size).by(1)
     end
   end
   

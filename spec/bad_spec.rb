@@ -32,7 +32,7 @@ describe 'adding a value' do
   it 'should work' do
     arr = [1, 2]
     arr << 3
-    arr.should include 3
+    arr.should include(3)
   end
 end
 
